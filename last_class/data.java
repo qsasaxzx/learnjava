@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class data {
 	//static ArrayList AllData = new ArrayList();
-	static ArrayList<HashMap<String, String>> Alldata = new ArrayList<HashMap<String, String>>();
+	static List<Map<String, String>> Alldata = new ArrayList<Map<String, String>>();
 
 	static Scanner scan = new Scanner(System.in);
 
@@ -29,8 +30,7 @@ public class data {
 		int select_code = scan.next().charAt(0);
 		
 		if(select_code == 49) {
-			List<ArrayList<HashMap<String, String>>> slist = Arrays.asList(Alldata);
-			slist.forEach(System.out::println);
+			Alldata.stream().forEach(System.out::println);
 			startService();
 		}else if(select_code==50) {
 			selectData();
@@ -112,10 +112,11 @@ public class data {
 		System.out.println("키값으로 조회합니다. 키값을 입력하세요 :");
 		char alpa = scan.next().charAt(0);
 		String code_name = Character.toString(alpa);
-		
 		//스트림 생성
-		List<ArrayList<HashMap<String, String>>> slist = Arrays.asList(Alldata);
-			slist.stream().forEach(x->{
+		Alldata.stream().filter( e -> getKey(e).equals(code_name)).forEach(HashMap -> System.out.println(HashMap));
+
+		
+			/*slist.stream().forEach(x->{
 				for(int i =0; i<Alldata.size();i++) {
 					if(Alldata.get(i).get("code_name").equals(code_name)) {
 						System.out.println(Alldata.get(i));
@@ -123,7 +124,7 @@ public class data {
 				}	
 				
 		});
-			
+			*/
 		startService();
 
 	}
@@ -134,14 +135,13 @@ public class data {
 		String code_name = Character.toString(alpa);
 
 		//스트림 생성,삭제
-		List<ArrayList<HashMap<String, String>>> slist = Arrays.asList(Alldata);
-			slist.stream().forEach(x->{
+			/*slist.stream().forEach(x->{
 				for(int i =0; i<Alldata.size();i++) {
 					if(Alldata.get(i).get("code_name").equals(code_name)) {
 						Alldata.remove(i);
 					}
 				}	
-		});	
+		});	*/
 			
 		String name = "주영광";
 		String cellphone = "01091527067";
@@ -169,20 +169,34 @@ public class data {
 		System.out.println("키값으로 삭제합니다. 키값을 입력하세요 :");
 		char alpa = scan.next().charAt(0);
 		String code_name = Character.toString(alpa);
+		
+		//Alldata.stream().filter( e -> getKey(e).equals(code_name)).iterator().remove();
+
 		//스트림 생성
-		List<ArrayList<HashMap<String, String>>> slist = Arrays.asList(Alldata);
-			slist.stream().forEach(x->{
+			/*slist.stream().forEach(x->{
 				for(int i =0; i<Alldata.size();i++) {
 					if(Alldata.get(i).get("code_name").equals(code_name)) {
 						Alldata.remove(i);
 					}
 				}	
-		});	
+		});	*/
 
 		/**/
 		
 		System.out.println("데이터가 삭제 되었습니다.");
 		startService();
+	}
+	public static String getKey(Map<String, String> e) {
+		
+		String key = "";
+		for(Map.Entry<String,String> entry : e.entrySet()){
+			if(entry.getKey()=="code_name") {
+				 key= entry.getValue();
+
+			}
+
+		}
+		return key;
 	}
 	
 
